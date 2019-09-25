@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <meta name="apple-itunes-app" content="app-id=1058254032"> -->
+    <title>test unverserl link</title>
+  </head>
+
+  <body>
+    <a href="https://www.luojh.com/joinroom">打开app</a>
+    <hr>
+    <a href="https://www.luojh.com/openapp">打开app</a>
+    <hr>
+    <a href="xylink://openapp">secheme打开app</a>
+    <hr>
+    <a href="https://a.app.qq.com/o/simple.jsp?pkgname=com.ainemo.dragoon">yingyongbao</a>
+    <hr>
+    <a
+      href="intent://com.xylink.push/notify_detail#Intent;scheme=hwpush;package=com.ainemo.dragoon.dev;launchFlags=0x10000000;end">android
+      intent app</a>
+    <hr>
+    <!-- href="intent://com.xylink.push/notify_detail#Intent;package=com.ainemo.dragoon.dev;scheme=hwpush;S.browser_fallback_url=https%3A%2F%2Fwww.baidu.com;end;">android -->
+    <a
+      href="intent://com.xylink.push/notify_detail#Intent;package=com.ainemo.dragoon.dev;scheme=hwpush;S.browser_fallback_url=https%3A%2F%2Fdevcdn.xylink.com%2FminiProgram%2Fulink%2Fulink.html%3Fentry%3Dintent;end;">android
+      intent app222</a>
+    <hr>
+    <a target="_blank" href="itms-apps://itunes.apple.com/app/id1058254032">itunes</a>
+    <hr>
+    <div>
+      <a target="_blank" href="https://itunes.apple.com/cn/app/wei/id1058254032">appstore</a>
+    </div>
+
+    <script src="https://unpkg.com/callapp-lib@2.1.8/dist/index.umd.min.js"></script>
+    <script>
+
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;   //判断是否是 android终端
+      var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+      var chrome = window.navigator.userAgent.indexOf("Chrome") || -1;
+      var isChrome = chrome > 0;
+
+      var isWeixin = function () { //判断是否是微信
+        var ua = navigator.userAgent.toLowerCase();
+
+        return ua.match(/MicroMessenger/i) == "micromessenger";
+      };
+
+      var wechatInfo = navigator.userAgent.match(/MicroMessenger\/([\d\.]+)/i)
+      var wechatVersion = wechatInfo[1]
+
+      function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+      }
+    </script>
+
+    <script>
+      function OpenApp(options) {
+        this.defaultOptions = {
+          timeout: 1200,
+          scheme: "",
+          applink: "",
+          copyText: "",
+          yyb: "",
+          appstore: "",
+          downloadUrl: "",
+          wechatJumpYYB: false,
+          tryMore: false,
+          callback: function () { }
+        };
+        this.options = Object.assign({}, options, defaultOptions);
+
+        this.init();
+      }
+
+      var OP = OpenApp.prototype;
+
+      OP = {
+        init() {
+          const u = navigator.userAgent;
+          const chrome = window.navigator.userAgent.indexOf("Chrome") || -1;
+          // 是否是android
+          this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;   //判断是否是 android终端
+          // 是否是ios
+          this.isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+          // 是否是chrome
+          this.isChrome = chrome > 0;
+          //判断是否是微信
+          this.isWeixin = (function () {
+            const ua = navigator.userAgent.toLowerCase();
+
+            return ua.match(/MicroMessenger/i) == "micromessenger";
+          })();
+
+          // 打开状态，failed，success，unknow
+          this.openStatus = {
+            FAILED: 'FAILED',
+            SUCCESS: 'SUCCESS',
+            UNKNOW: 'UNKNOW'
+          };
+        },
+
+        open() {
+          
+        },
+
+        download() {
+          if (this.isWeixin && this.isAndroid) {
+            if (this.options.wechatJumpYYB) {
+              this.locationCall(this.options.yyb);
+            }
+          } else if (this.isWeixin && this.isIOS) {
+            if (this.options.wechatJumpYYB) {
+              this.locationCall(this.options.appstore);
+            }
+          } else if (this.isAndroid) {
+            if (downloadUrl) {
+              this.locationCall(this.options.downloadUrl);
+            } else {
+              this.locationCall(this.options.yyb);
+            }
+          } else if (this.isIOS) {
+            this.locationCall(this.options.appstore);
+          } else {
+            this.locationCall(this.options.yyb);
+          }
+        },
+
+        timeoutEvent() {
+          var self = this;
+          var haveChange = false;
+          var { property = "", eventName = "" } = this.getVisibilityPrefix();
+
+          var pageChange = function (e) {
+            haveChange = true;
+
+            if (document[property] || e.hidden || document.visibilityState == 'hidden') {
+              self.openEnd(self.openStatus.SUCCESS);
+            } else {
+              self.openEnd(self.openStatus.UNKNOW);
+            }
+
+            document.removeEventListener(eventName, pageChange);
+            document.removeEventListener('baiduboxappvisibilitychange', pageChange);
+          };
+
+          document.addEventListener(eventName, pageChange, false);
+          document.addEventListener('baiduboxappvisibilitychange', pageChange, false);
+
+          this.timer = setTimeout(function () {
+            if (haveChange) {
+              return;
+            }
+
+            document.removeEventListener(eventName, pageChange);
+            document.removeEventListener('baiduboxappvisibilitychange', pageChange);
+
+            if (!document.hidden && !haveChange) {
+              self.openEnd(self.openStatus.FAILED);
+            } else {
+              self.openEnd(self.openStatus.UNKNOW);
+            }
+            haveChange = true;
+          }, this.options.timeout);
+        },
+
+        getVisibilityPrefix() {
+          var prefixes = [{
+            property: 'webkit',
+            eventName: 'webkitvisibilitychange'
+          }, {
+            property: 'moz',
+            eventName: 'mozvisibilitychange'
+          }, {
+            property: 'ms',
+            eventName: 'msvisibilitychange'
+          }, {
+            property: 'o',
+            eventName: 'ovisibilitychange'
+          }];
+          var correctPrefix;
+
+          if ('hidden' in document) return {
+            property: 'hidden',
+            eventName: 'visibilitychange'
+          };
+
+          prefixes.forEach(function (prefix) {
+            if (prefix.property + 'Hidden' in document) {
+              correctPrefix = prefix;
+            }
+          });
+
+          return correctPrefix;
+        },
+
+        openEnd(status) {
+          clearTimeout(this.timer);
+
+          this.options.callback && this.options.callback(status);
+
+          // 调起失败处理
+          if (status != this.openStatus.SUCCESS) {
+            switch (status) {
+              case 'FAILED':
+                this.locationCall();
+                break;
+              case 'UNKNOW':
+                this.locationCall();
+                break;
+              default:
+                break;
+            }
+          }
+        },
+
+        locationCall(url) {
+          if (window.top.location) {
+            window.top.location.href = url;
+          } else if (window.location) {
+            window.location.href = url;
+          } else if (document.location) {
+            document.location.href = url;
+          }
+        }
+      }
+
+    </script>
+
+    <script>
+      window.onload = function () {
+        const options = {
+          scheme: {
+            protocol: "xylink",
+            host: "com.xylink.push"
+          },
+          intent: {
+            package: "com.ainemo.dragoon.dev",
+            scheme: "hwpush"
+          },
+          // universal: {
+          //   host: "https://www.luojh.com",
+          //   pathKey: "openapp"
+          // },
+          appstore: "https://itunes.apple.com/cn/app/wei/id1058254032",
+          yingyongbao: "https://a.app.qq.com/o/simple.jsp?pkgname=com.ainemo.dragoon",
+          timeout: 2000,
+          fallback: "https://devcdn.xylink.com/miniProgram/ulink/ulink.html?111=1"
+        };
+        const callLib = new CallApp(options);
+
+        if (isWeixin && isIOS && getQueryString("entry") === "redirect") {
+          // window.location.href = "itms-apps://itunes.apple.com/app/id1058254032";
+          window.location.href = "https://itunes.apple.com/cn/app/wei/id1058254032";
+          return;
+        }
+
+        if (getQueryString("entry") === "redirect" && isIOS) {
+          // window.location.href = "itms-apps://itunes.apple.com/app/id1058254032";
+          window.location.href = "https://itunes.apple.com/cn/app/wei/id1058254032";
+          return;
+        }
+
+        if (isIOS) {
+          // window.location.href = "https://itunes.apple.com/cn/app/wei/id1058254032";
+          return;
+        }
+
+        if (isAndroid && getQueryString("entry") === "intent" && !isWeixin) {
+
+          callLib.open({
+            // android
+            path: 'notify_detail',
+
+            // ios
+            // path: 'openapp',
+            callback: function () {
+
+            }
+          });
+
+          return;
+        }
+
+        if (isAndroid && isChrome) {
+          window.location.href = "xylink://openapp";
+          // callLib.open({
+          //   // android
+          //   path: 'notify_detail',
+
+          //   // ios
+          //   // path: 'openapp',
+          //   callback: function() {
+
+          //   }
+          // });          
+        }
+      }
+    </script>
+  </body>
+
+</html>
