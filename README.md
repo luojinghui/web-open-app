@@ -1,4 +1,4 @@
-# Open App
+# web-open-app
 Html5 page to launch app, if not install app, will open yyb and appstore by auto or handle  to download.
 
 Support copying to the clipboard for data continuation.
@@ -13,13 +13,13 @@ H5唤起已经安装的app，如果没有安装，则跳到appstore/android stor
 ### Use Guide
 install
 ```bash
-$ npm install open-app
+$ npm install web-open-app
 
-$ yarn add open-app
+$ yarn add web-open-app
 ````
 
 ```js
-import OpenApp from open-app;
+import OpenApp from web-open-app;
 
 openapp = new OpenApp({
   // scheme地址
