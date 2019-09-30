@@ -10,13 +10,13 @@ H5唤起已经安装的app，如果没有安装，则跳到appstore/android stor
 ### Use Guide
 install
 ```bash
-$ npm install launch-app
+$ npm install open-app
 
-$ yarn add launch-app
+$ yarn add open-app
 ````
 
 ```js
-import OpenApp from launch-app;
+import OpenApp from open-app;
 
 openapp = new OpenApp({
   // scheme地址
