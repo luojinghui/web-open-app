@@ -7,7 +7,7 @@
       "experimentalDecorators": true,
       "preserveConstEnums": true,
       "outDir": "lib",
-      "declaration": true,
+      "declaration": true
       // "lib": [
       //     "es2015.promise",
       //     "es5",
