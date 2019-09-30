@@ -7,6 +7,9 @@ H5唤起已经安装的app，如果没有安装，则跳到appstore/android stor
 
 支持复制到剪贴板做数据延续。
 
+### 方案介绍
+[方案介绍](./guide.md)
+
 ### Use Guide
 install
 ```bash
