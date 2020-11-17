@@ -6,11 +6,11 @@
  * @authors Luo-jinghui (luojinghui424@gmail.com)
  * @date  2019-09-25 20:55:35
  */
-import { ISystemInfo } from './browser';
+import { ISystemInfo } from "./browser";
 interface IOpenStatus {
-    FAILED: 'FAILED';
-    SUCCESS: 'SUCCESS';
-    UNKNOW: 'UNKNOW';
+    FAILED: "FAILED";
+    SUCCESS: "SUCCESS";
+    UNKNOW: "UNKNOW";
 }
 interface IOptions {
     timeout: number;

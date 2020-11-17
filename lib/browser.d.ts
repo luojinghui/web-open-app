@@ -13,5 +13,6 @@ export interface ISystemInfo {
     isSamsung: boolean;
     isWeixin: boolean;
     weixinVersion: string;
+    isIPad: boolean;
 }
 export declare const systemInfo: () => ISystemInfo;
