@@ -71,19 +71,17 @@
     </div>
 
     <!-- <script src="https://unpkg.com/callapp-lib@2.1.8/dist/index.umd.min.js"></script> -->
-
     <!-- <script src="https://unpkg.com/clipboard@2/dist/clipboard.min.js"></script> -->
+
     <script>
-
-      console.log('test33...');
-
       var u = navigator.userAgent;
       var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;   //判断是否是 android终端
       var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
       var chrome = window.navigator.userAgent.indexOf("Chrome") || -1;
       var isChrome = chrome > 0;
 
-      var isWeixin = function () { //判断是否是微信
+      var isWeixin = function () {
+        //判断是否是微信
         var ua = navigator.userAgent.toLowerCase();
 
         return ua.match(/MicroMessenger/i) == "micromessenger";
@@ -100,23 +98,21 @@
       }
     </script>
 
-    <script src="./lib/index.js?random=15121"></script>
+    <script src="../lib/index.js?random=15135"></script>
     <script>
       var openapp;
 
       window.onload = function () {
-        (async () => {
-          let listOfInstalledApps = await navigator.getInstalledRelatedApps();
-          console.log("listOfInstalledApps", listOfInstalledApps)
-        })()
-
         openapp = new OpenApp({
-          scheme: "xylink://openapp",
-          intent: "intent://com.xylink.push/notify_detail#Intent;package=com.ainemo.dragoon.dev;scheme=hwpush;S.browser_fallback_url=https%3A%2F%2Fdevcdn.xylink.com%2FminiProgram%2Fulink%2Fulink.html%3Fentry%3Dintent;end;",
-          applink: "https://www.luojh.com/openapp",
+          scheme: "xylink://openapp#/index.html",
+          // intent: "intent://com.xylink.push/notify_detail#Intent;package=com.ainemo.dragoon.dev;scheme=hwpush;S.browser_fallback_url=https%3A%2F%2Fdevcdn.xylink.com%2FminiProgram%2Fulink%2Fulink.html%3Fentry%3Dintent;end;",
+          applink: "https://luojh.com/openapp",
+          // applink: "https://www.luojh.com/openapp",
+          // applink: "",
+          iosUseScheme: true,
           copyText: "number: " + Math.ceil(Math.random() * 10000),
           callback: function (status, msg) {
-            console.log("status: ", status, "  msg2: ", msg);
+            console.log("status: ", status, "  msg: ", msg);
           }
         })
 
@@ -125,13 +121,14 @@
         // }
 
         document.getElementById("openapp").addEventListener("click", function () {
-          openapp.open();
+          // openapp.open();
+          location.href = "https://luojh.com/openapp";
         })
 
-        document.getElementById("test").addEventListener("click", function () {
-          window.location.href = "xylink://openapp";
-          setTimeout(function () { window.location = 'https://itunes.apple.com/cn/app/wei/id1058254032' }, 50);
-        })
+        // document.getElementById("test").addEventListener("click", function () {
+        //   window.location.href = "xylink://openapp";
+        //   setTimeout(function () { window.location = 'https://itunes.apple.com/cn/app/wei/id1058254032' }, 50);
+        // })
       }
 
       function onFocusInput() {
