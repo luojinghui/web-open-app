@@ -39,7 +39,7 @@ export const systemInfo = (): ISystemInfo => {
     return ua.match(/MicroMessenger/i) == "micromessenger";
   })();
   const isIPad =
-    navigator.userAgent.match(/(iPad)/) /* iOS pre 13 */ ||
+    !!navigator.userAgent.match(/(iPad)/) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   // 微信版本
   const weixinVersion = (function () {
