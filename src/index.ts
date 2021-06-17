@@ -85,18 +85,6 @@ export default class OpenApp {
 
     this.timeoutEvent();
 
-    console.log({
-      isIOS,
-      isWeixin,
-      weixinVersion,
-      applink,
-      iosUseScheme,
-      scheme,
-      isIPad,
-      isAndroid,
-      isChrome,
-    });
-
     if (isIOS) {
       // 微信7.0.5放开了universal link，直接使用即可
       // 否则，直接反馈唤起失败，让调用者决定是否需要采取其他方式
