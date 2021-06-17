@@ -349,5 +349,20 @@ export default class OpenApp {
   }
 }
 
+const DEFAULT_LOG_STYLE = "color: #3876ff;";
+const DEFAULT_LINE = "%c*********************************";
+
+(() => {
+  return (
+    console.info(DEFAULT_LINE, DEFAULT_LOG_STYLE),
+    console.info("%c*   Web Open App - V1.0.5", DEFAULT_LOG_STYLE),
+    console.info(
+      "%c*   文档：https://github.com/luojinghui/web-open-app",
+      DEFAULT_LOG_STYLE
+    ),
+    console.info(DEFAULT_LINE, DEFAULT_LOG_STYLE)
+  );
+})();
+
 // @ts-ignore
 window.OpenApp = OpenApp;
